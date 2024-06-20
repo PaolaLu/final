@@ -38,8 +38,14 @@ export default {
 
   data: () => ({
   items: [
-      { title: "Home", icon: "mdi-view-dashboard",to: '/' },
-      { title: "About", icon: "mdi-view-dashboard",to: '/about' },
+      { title: "Home", icon: "mdi-school",to: '/' },
+      { title: "About", icon: "mdi-school",to: '/about' },
+	  { title: "Aula", icon: "mdi-school",to: '/aula' },
+	  { title: "Carrera", icon: "mdi-school",to: '/carrera' },
+	  { title: "Profesor", icon: "mdi-school",to: '/profesor' },
+	  { title: "Materia", icon: "mdi-school",to: '/materia' },
+	  { title: "Reserva Aula", icon: "mdi-school",to: '/reservaaula' },
+	  { title: "Horario Materia", icon: "mdi-school",to: '/horariomateria' },
     ],
 
 }),
