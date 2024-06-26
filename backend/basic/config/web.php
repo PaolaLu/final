@@ -17,7 +17,17 @@ $config = [
             'cookieValidationKey' => 'yFRxTY6oVRl1x9yAWvHbUglH48wkl0QK',
             'parsers'=>[
                 'application/json'=>'yii\web\JsonParser'
-            ]
+            ],
+            'as cors' => [
+                'class' => \yii\filters\Cors::className(),
+                'cors' => [
+                    'Origin' => ['http://127.0.0.1:8080', 'http://localhost:8080'],
+                    'Access-Control-Request-Method' => ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
+                    'Access-Control-Allow-Credentials' => true,
+                    'Access-Control-Max-Age' => 3600, // Cache (seconds)
+                    'Access-Control-Allow-Headers' => ['authorization', 'X-Requested-With', 'content-type'],
+                ],
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
