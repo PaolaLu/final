@@ -22,7 +22,7 @@
     <v-data-table
       :headers="headers"
       :items="listadoAula"
-      height="500"
+      height="400"
       item-value="name"
     >
       <template v-slot:item.actions="{ item }">

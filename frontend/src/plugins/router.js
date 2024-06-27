@@ -6,6 +6,7 @@ import AboutAula from '../components/AboutAula.vue';
 import AbmAula from '../components/AbmAula.vue';
 import ListadoAula from '../components/ListadoAula.vue';
 import AbmCarrera from '../components/AbmCarrera.vue';
+import ListadoCarrera from '../components/ListadoCarrera.vue';
 import AbmProfesor from '../components/AbmProfesor.vue';
 import AbmMateria from '../components/AbmMateria.vue';
 import AbmReservaAula from '../components/AbmReservaAula.vue';
@@ -19,7 +20,8 @@ const routes = [
   { path: '/about', name: 'AboutAula', component: AboutAula },
   { path: '/abmaula', name: 'AbmAula', component: AbmAula },
   { path: '/aulas', name: 'ListadoAula', component: ListadoAula },
-  { path: '/carrera', name: 'AbmCarrera', component: AbmCarrera },
+  { path: '/carrera', name: 'ListadoCarrera', component: ListadoCarrera },
+  { path: '/abmcarrera', name: 'AbmCarrera', component: AbmCarrera },
   { path: '/profesor', name: 'AbmProfesor', component: AbmProfesor },
   { path: '/materia', name: 'AbmMateria', component: AbmMateria },
   { path: '/reservaaula', name: 'AbmReservaAula', component: AbmReservaAula },
