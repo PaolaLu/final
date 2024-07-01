@@ -10,6 +10,7 @@ import ListadoCarrera from '../components/ListadoCarrera.vue';
 import AbmProfesor from '../components/AbmProfesor.vue';
 import ListadoProfesor from '../components/ListadoProfesor.vue';
 import AbmMateria from '../components/AbmMateria.vue';
+import ListadoMateria from '../components/ListadoMateria.vue';
 import AbmReservaAula from '../components/AbmReservaAula.vue';
 import AbmHorarioMateria from '../components/AbmHorarioMateria.vue';
 
@@ -25,7 +26,8 @@ const routes = [
   { path: '/abmcarrera', name: 'AbmCarrera', component: AbmCarrera },
   { path: '/abmprofesor', name: 'AbmProfesor', component: AbmProfesor },
   { path: '/profesor', name: 'ListadoProfesor', component: ListadoProfesor },
-  { path: '/materia', name: 'AbmMateria', component: AbmMateria },
+  { path: '/abmmateria', name: 'AbmMateria', component: AbmMateria },
+  { path: '/materia', name: 'ListadoMateria', component: ListadoMateria },
   { path: '/reservaaula', name: 'AbmReservaAula', component: AbmReservaAula },
   { path: '/horariomateria', name: 'AbmHorarioMateria', component: AbmHorarioMateria },
 ];
