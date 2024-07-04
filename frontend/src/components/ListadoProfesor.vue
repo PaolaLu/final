@@ -97,6 +97,7 @@
       navigateToHome() {
       this.$router.push('/');
       },
+      
       editarProfesor(item) {
         this.profesorSeleccionado = { ...item };
         this.editar = true;

@@ -159,6 +159,8 @@ export default {
     cancelar() {
       this.resetValidationForAbm();
       this.$emit("cancelar");
+      this.$router.push('/aulas');
+      
     },
     resetValidationForAbm() {
       if (this.$refs.form) {

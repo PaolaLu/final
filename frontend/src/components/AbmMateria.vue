@@ -94,6 +94,7 @@ export default {
       custom_axios
         .post('/apiv1/materia', this.materiaData)
         .then((response) => {
+          console.log(response);
           this.resetValidationForAbm();
           this.$emit('guardar');
           this.$router.push('/materia');
@@ -106,6 +107,7 @@ export default {
       custom_axios
         .patch(`/apiv1/materia/${this.materiaData.id}`, this.materiaData)
         .then((response) => {
+          console.log(response);
           this.resetValidationForAbm();
           this.$emit('guardar');
         })
@@ -146,9 +148,6 @@ export default {
     },
   },
   created() {
-    if (this.materia) {
-      this.materiaData = { ...this.materia };
-    }
     this.fetchCarreras();
     this.fetchProfesores();
   },
