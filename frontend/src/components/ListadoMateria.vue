@@ -67,8 +67,8 @@ export default {
       headers: [
         { text: 'Nombre', value: 'nombre' },
         { text: 'Cantidad de Alumnos', value: 'cant_alumnos' },
-        { text: 'Carrera', value: 'carrera.nombre' },
-        { text: 'Profesor', value: 'profesor.nombre' },
+        { text: 'Carrera', value: 'carrera' }, 
+        { text: 'Profesor', value: 'profesor' }, 
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
       listadoMaterias: [],
@@ -80,23 +80,46 @@ export default {
     };
   },
   methods: {
-    todasLasMaterias() {
-      custom_axios
-        .get('/apiv1/materia')
-        .then(response => {
-          if (response.status === 200) {
-            this.listadoMaterias = response.data.map(materia => {
-              return {
-                ...materia,
-                carrera: materia.carrera ? materia.carrera : { nombre: 'Sin carrera' },
-                profesor: materia.profesor ? materia.profesor : { nombre: 'Sin profesor' },
-              };
-            });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    async todasLasMaterias() {
+      try {
+        const response = await custom_axios
+        .get('/apiv1/materia');
+        if (response.status === 200) {
+          const materias = response.data;
+          console.log('Materias:', materias); 
+
+          // ID de carreras y profesores
+          const carreraIds = [...new Set(materias.map(m => m.id_carrera))];
+          const profesorIds = [...new Set(materias.map(m => m.id_profesor))];
+
+          // datos de todas las carreras y profesores
+          const [carrerasResponse, profesoresResponse] = await Promise.all([
+            custom_axios.get('/apiv1/carrera', { params: { ids: carreraIds.join(',') } }),
+            custom_axios.get('/apiv1/profesor', { params: { ids: profesorIds.join(',') } }),
+          ]);
+
+          const carreras = carrerasResponse.data.reduce((acc, carrera) => {
+            acc[carrera.id] = carrera;
+            return acc;
+          }, {});
+
+          const profesores = profesoresResponse.data.reduce((acc, profesor) => {
+            acc[profesor.id] = profesor;
+            return acc;
+          }, {});
+
+          this.listadoMaterias = materias.map(materia => {
+            return {
+              ...materia,
+              carrera: carreras[materia.id_carrera] ? carreras[materia.id_carrera].nombre : 'Sin carrera',
+              profesor: profesores[materia.id_profesor] ? profesores[materia.id_profesor].apellido : 'Sin profesor',
+            };
+          });
+
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     navigateToAbmMateria() {
       this.$router.push('/abmmateria');
@@ -108,7 +131,6 @@ export default {
       this.materiaSeleccionada = { ...item };
       this.editar = true;
       this.mostrarAbmMateria = true;
-    
     },
     confirmarEliminarMateria(item) {
       this.materiaAEliminar = item;
@@ -141,6 +163,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mr-2 {
+  margin-right: 8px;
+}
+.ml-2 {
+  margin-left: 8px;
+}
+</style>
+
+
 
 <style scoped>
 .mr-2 {

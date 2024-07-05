@@ -126,7 +126,8 @@ export default {
       }
     },
     fetchCarreras() {
-      custom_axios.get('/apiv1/carrera')
+      custom_axios
+      .get('/apiv1/carrera')
         .then(response => {
           this.carreras = response.data;
         })
@@ -135,7 +136,8 @@ export default {
         });
     },
     fetchProfesores() {
-      custom_axios.get('/apiv1/profesor')
+      custom_axios
+      .get('/apiv1/profesor')
         .then(response => {
           this.profesores = response.data.map(profesor => ({
             ...profesor,
