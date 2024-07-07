@@ -1,7 +1,24 @@
 <template>
-  <div>
-    <div>
-      <v-btn color="primary" @click="abrirAbmReservaAula(false)">Agregar Reserva de Aula</v-btn>
+   <div class="aula-container">
+    <div class="button-container">
+
+      <v-btn 
+      color="primary" 
+      @click="abrirAbmReservaAula(false)" 
+      class="custom-button mr-4"
+      >
+      <v-icon left>mdi-school</v-icon>
+      Agregar Reserva de Aula
+    </v-btn>
+    <v-btn
+        color="blue" 
+
+        @click="navigateToHome"
+        class="custom-button"
+      >
+        <v-icon left>mdi-home</v-icon>
+        Volver a Home
+      </v-btn>
     </div>
 
     <v-data-table
@@ -11,8 +28,8 @@
       item-value="id"
     >
       <template v-slot:item.actions="{ item }">
-        <v-icon @click="abrirAbmReservaAula(true, item)" class="mr-2">mdi-pencil</v-icon>
-        <v-icon @click="confirmarEliminarReservaAula(item)" class="ml-2">mdi-delete</v-icon>
+        <v-icon color="green" @click="abrirAbmReservaAula(true, item)" class="mr-2">mdi-pencil</v-icon>
+        <v-icon color="red" @click="confirmarEliminarReservaAula(item)" class="ml-2">mdi-delete</v-icon>
       </template>
     </v-data-table>
 
@@ -105,6 +122,9 @@ export default {
     },
     cancelarAbmReservaAula() {
       this.mostrarAbmReservaAula = false;
+    },
+    navigateToHome() {
+      this.$router.push('/');
     },
     confirmarEliminarReservaAula(reserva) {
       this.reservaAulaAEliminar = reserva;

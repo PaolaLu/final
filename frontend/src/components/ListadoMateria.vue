@@ -1,6 +1,7 @@
 <template>
   <div class="aula-container">
     <div class="button-container">
+      
       <v-btn 
         color="primary"
         @click="navigateToAbmMateria"
@@ -11,6 +12,7 @@
       </v-btn>
       <v-btn
         color="blue" 
+
         @click="navigateToHome"
         class="custom-button"
       >
