@@ -70,7 +70,8 @@ $config = [
                         'apiv1/aula',
                         'apiv1/materia',
                         'apiv1/horariomateria',
-                        'apiv1/reservaaula'
+                        'apiv1/reservaaula',
+                        'auth/login'
 
                         ]
                 ],
@@ -82,6 +83,9 @@ $config = [
     'modules' => [
         'apiv1' => [
             'class' => 'app\modules\apiv1\Apiv1Module',
+        ],
+        'auth' => [
+            'class' => 'app\modules\auth\authModule',
         ],
     ],
     'params' => $params,

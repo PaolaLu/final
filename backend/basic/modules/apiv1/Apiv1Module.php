@@ -2,6 +2,8 @@
 
 namespace app\modules\apiv1;
 
+use yii\filters\auth\HttpBearerAuth;
+
 /**
  * apiv1 module definition class
  */
@@ -19,6 +21,16 @@ class Apiv1Module extends \yii\base\Module
     {
         parent::init();
 
-        // custom initialization code goes here
+        \Yii::$app->user->enableSession = false;
     }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::class,
+        ];
+        return $behaviors;
+    }
+
 }
