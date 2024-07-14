@@ -1,3 +1,3 @@
 <template>
-    <h1>Hola Home!</h1>
+    <h1>Hola Home! de nuevo</h1>
 </template>
