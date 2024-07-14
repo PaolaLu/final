@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
 import HomeAula from '../components/HomeAula.vue';
 import AboutAula from '../components/AboutAula.vue';
 import AbmAula from '../components/AbmAula.vue';
@@ -15,7 +14,8 @@ import AbmReservaAula from '../components/AbmReservaAula.vue';
 import ListadoReservaAula from '../components/ListadoReservaAula.vue';
 import AbmHorarioMateria from '../components/AbmHorarioMateria.vue';
 import ListadoHorarioMateria from '../components/ListadoHorarioMateria.vue';
-
+import ChangePassword from "../components/ChangePassword.vue";
+import store from '../plugins/store.js';
 
 Vue.use(Router);
 
@@ -34,6 +34,7 @@ const routes = [
   { path: '/reservaaula', name: 'ListadoReservaAula', component: ListadoReservaAula },
   { path: '/abmhorariomateria', name: 'AbmHorarioMateria', component: AbmHorarioMateria },
   { path: '/horariomateria', name: 'ListadoHorarioMateria', component: ListadoHorarioMateria },
+  { path: '/changepassword', name: 'ChangePassword', component: ChangePassword },
 ];
 
 const router = new Router({
