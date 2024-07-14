@@ -71,6 +71,7 @@ export default {
       }
     },
     guardarCarrera() {
+      console.log(this.carreraData)
       custom_axios
         .post("/apiv1/carrera", this.carreraData)
         .then(response => {
