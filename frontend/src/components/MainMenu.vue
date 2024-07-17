@@ -3,10 +3,10 @@
 	  <v-navigation-drawer app permanent>
 		<v-list-item>
 		  <v-img
-			alt="Aulas Logo"
+			alt="Aulas Logo1"
 			class="shrink mr-2"
 			contain
-			:src="require('../assets/logo.png')"
+			:src="require('../assets/logo1.png')"
 			transition="scale-transition"
 			width="40"
 		  />
@@ -41,7 +41,6 @@
 	data: () => ({
 	  items: [
 		{ title: "Home", icon: "mdi-school", to: "/" },
-		{ title: "About", icon: "mdi-school", to: "/about" },
 		{ title: "Aula", icon: "mdi-school", to: "/aulas" },
 		{ title: "Carrera", icon: "mdi-school", to: "/carrera" },
 		{ title: "Profesor", icon: "mdi-school", to: "/profesor" },

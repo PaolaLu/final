@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import HomeAula from '../components/HomeAula.vue';
-import AboutAula from '../components/AboutAula.vue';
 import AbmAula from '../components/AbmAula.vue';
 import ListadoAula from '../components/ListadoAula.vue';
 import AbmCarrera from '../components/AbmCarrera.vue';
@@ -21,7 +20,6 @@ Vue.use(Router);
 
 const routes = [
   { path: '/', name: 'HomeAula', component: HomeAula },
-  { path: '/about', name: 'AboutAula', component: AboutAula },
   { path: '/abmaula', name: 'AbmAula', component: AbmAula },
   { path: '/aulas', name: 'ListadoAula', component: ListadoAula },
   { path: '/carrera', name: 'ListadoCarrera', component: ListadoCarrera },

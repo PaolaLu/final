@@ -106,6 +106,7 @@ export default {
       this.aulaSeleccionada = { ...item };
       this.editar = true;
       this.mostrarAbmAula = true;
+      
     },
     confirmarEliminarAula(item) {
       this.aulaAEliminar = item;
