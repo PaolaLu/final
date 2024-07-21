@@ -39,7 +39,8 @@
         <div class="card">
           <h2><i class="fas fa-user-tie"></i> Profesores</h2>
           <p>Administre la información de los profesores.</p>
-          <router-link to="/profesore" class="btn">Ver Profesores</router-link>
+          <router-link to="/profesor"
+           class="btn">Ver Profesores</router-link>
         </div>
         
       </div>

@@ -33,6 +33,8 @@ class m240709_205125_add_new_users extends Migration
         $user2->email = "invitado@curza.edu.ar";
         $user2->passwd = "invitado1";
         $user2->save();
+
+        
     }
 
     /**

@@ -88,7 +88,7 @@ export default {
         ubicacion: "",
         cant_pcs: "",
         cant_proyector: "",
-        es_climatizada: null, // Inicialmente nulo para no seleccionado
+        es_climatizada: null,
         aforo: "",
       },
       descripcionRules: [

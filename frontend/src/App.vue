@@ -12,6 +12,7 @@
  
  
  <script>
+
  import MainMenu from './components/MainMenu.vue';
  import MainBar from './components/MainBar.vue';
  export default {
