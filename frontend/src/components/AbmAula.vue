@@ -111,6 +111,7 @@ export default {
       ],
     };
   },
+  //cambios en la propiedad aula para actualizar 
   watch: {
     aula: {
       handler(nuevoValor) {
@@ -130,6 +131,7 @@ export default {
       } else {
         this.guardarAula();
       }
+      
     },
     guardarAula() {
       custom_axios

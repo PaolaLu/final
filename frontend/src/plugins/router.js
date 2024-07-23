@@ -32,6 +32,7 @@ const routes = [
   { path: '/reservaaula', name: 'ListadoReservaAula', component: ListadoReservaAula },
   { path: '/abmhorariomateria', name: 'AbmHorarioMateria', component: AbmHorarioMateria },
   { path: '/horariomateria', name: 'ListadoHorarioMateria', component: ListadoHorarioMateria },
+  
 ];
 
 const router = new Router({
