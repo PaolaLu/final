@@ -18,7 +18,7 @@ $config = [
             'parsers'=>[
                 'application/json'=>'yii\web\JsonParser'
             ],
-            'as cors' => [
+         /*   'as cors' => [
                 'class' => \yii\filters\Cors::className(),
                 'cors' => [
                     'Origin' => ['http://127.0.0.1:8080', 'http://localhost:8080'],
@@ -27,7 +27,7 @@ $config = [
                     'Access-Control-Max-Age' => 3600, // Cache (seconds)
                     'Access-Control-Allow-Headers' => ['authorization', 'X-Requested-With', 'content-type'],
                 ],
-            ],
+            ],*/
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -70,7 +70,8 @@ $config = [
                         'apiv1/aula',
                         'apiv1/materia',
                         'apiv1/horariomateria',
-                        'apiv1/reservaaula'
+                        'apiv1/reservaaula',
+                        'auth/login'
 
                         ]
                 ],
@@ -82,7 +83,10 @@ $config = [
     'modules' => [
         'apiv1' => [
             'class' => 'app\modules\apiv1\Apiv1Module',
-        ],
+                    ],
+         'auth' => [
+            'class' => 'app\modules\auth\authModule',
+                    ],
     ],
     'params' => $params,
 ];

@@ -1,11 +1,13 @@
 <?php
 
-namespace app\modules\apiv1\controllers;
+namespace app\modules\auth\controllers;
 
-use yii\rest\ActiveController;
+use yii\web\Controller;
 use yii\filters\Cors;
+use yii\filters\ContentNegotiator;
+use yii\web\Response;
 
-class BaseController extends ActiveController
+class BaseController extends Controller
 {
     public static function allowedDomains()
     {
@@ -15,11 +17,17 @@ class BaseController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-    
+
+        // Eliminar el filtro de autenticación si es necesario
+        if (isset($behaviors['authenticator'])) {
+            unset($behaviors['authenticator']);
+        }
+
+        // Agregar el filtro CORS
         $behaviors['corsFilter'] = [
             'class' => Cors::className(),
             'cors' => [
-                'Origin' => ['http://127.0.0.1:8080'],
+                'Origin' => static::allowedDomains(),
                 'Access-Control-Request-Method' => ['POST', 'PUT', 'PATCH', 'DELETE', 'GET', 'OPTIONS'],
                 'Access-Control-Allow-Credentials' => true,
                 'Access-Control-Max-Age' => 3600, // Cache (seconds)
@@ -27,11 +35,16 @@ class BaseController extends ActiveController
                 'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page', 'X-Pagination-Page-Count', 'X-Pagination-Total-Count']
             ],
         ];
-    
+
+        // Re-agregar el filtro de autenticación si es necesario
+        if (isset($behaviors['authenticator'])) {
+            $behaviors['authenticator'] = $behaviors['authenticator'];
+        }
+
         return $behaviors;
     }
 
-   /* public function actions()
+    public function actions()
     {
         $actions = parent::actions();
         // Manejar las solicitudes OPTIONS
@@ -39,5 +52,11 @@ class BaseController extends ActiveController
             'class' => 'yii\rest\OptionsAction',
         ];
         return $actions;
-    }*/
+    }
+
+    public function beforeAction($action)
+    {
+        \Yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+        return parent::beforeAction($action);
+    }
 }
