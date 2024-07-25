@@ -72,7 +72,10 @@ $config = [
                         'apiv1/horariomateria',
                         'apiv1/reservaaula'
 
-                        ]
+                        ],
+                        'extraPatterns' => [
+                            'GET materias-reservadas/<id:\d+>' => 'materias-reservadas',
+                        ],
                 ],
 
             ],

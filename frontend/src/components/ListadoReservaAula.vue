@@ -1,26 +1,32 @@
 <template>
-   <div class="aula-container">
+  <div class="aula-container">
     <div class="button-container">
-
       <v-btn 
-      color="primary" 
-      @click="abrirAbmReservaAula(false)" 
-      class="custom-button mr-4"
+        color="primary" 
+        @click="abrirAbmReservaAula(false)" 
+        class="custom-button mr-4"
       >
-      <v-icon left>mdi-school</v-icon>
-      Agregar Reserva de Aula
-    </v-btn>
-    <v-btn
+        <v-icon left>mdi-school</v-icon>
+        Agregar Reserva de Aula
+      </v-btn>
+      <v-btn
         color="blue" 
-
         @click="navigateToHome"
         class="custom-button"
       >
         <v-icon left>mdi-home</v-icon>
         Volver a Home
       </v-btn>
+      <!-- Nuevo botón para agendamiento de materia y aula -->
+      <v-btn 
+        color="purple" 
+        @click="abrirAgendamientoMateriaAula" 
+        class="custom-button ml-4"
+      >
+        <v-icon left>mdi-calendar"></v-icon>
+        Agendamiento de materia y aula
+      </v-btn>
     </div>
-
     <v-data-table
       :headers="headers"
       :items="listadoReservaAula"
@@ -32,7 +38,6 @@
         <v-icon color="red" @click="confirmarEliminarReservaAula(item)" class="ml-2">mdi-delete</v-icon>
       </template>
     </v-data-table>
-
     <v-dialog v-model="mostrarAbmReservaAula" max-width="500px" persistent>
       <AbmReservaAula
         :reserva="reservaAulaSeleccionada"
@@ -41,7 +46,6 @@
         @cancelar="cancelarAbmReservaAula"
       />
     </v-dialog>
-
     <v-dialog v-model="mostrarConfirmacion" max-width="500px">
       <v-card>
         <v-card-title class="headline">Confirmar Eliminación</v-card-title>
@@ -53,16 +57,25 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <!-- Nuevo diálogo para agendamiento de materia y aula -->
+    <v-dialog v-model="mostrarAgendamientoMateriaAula" max-width="600px" persistent>
+      <AgendamientoMateriaAula
+        @guardar="guardarAgendamientoMateriaAula"
+        @cancelar="cancelarAgendamientoMateriaAula"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import custom_axios from '../plugins/axios.js';
 import AbmReservaAula from './AbmReservaAula.vue';
+import AgendamientoMateria from './AgendamientoMateria.vue';
 
 export default {
   components: {
     AbmReservaAula,
+    AgendamientoMateria,
   },
   data() {
     return {
@@ -76,6 +89,7 @@ export default {
       listadoReservaAula: [],
       mostrarAbmReservaAula: false,
       mostrarConfirmacion: false,
+      mostrarAgendamientoMateriaAula: false,
       reservaAulaSeleccionada: {},
       reservaAulaAEliminar: null,
       editar: false,
@@ -87,7 +101,7 @@ export default {
         const response = await custom_axios.get('/apiv1/reservaaula');
         if (response.status === 200) {
           const reservas = response.data;
-          console.log('Reservas:', reservas); 
+          console.log('Reservas:', reservas);
 
           const aulaIds = [...new Set(reservas.map(r => r.id_aula))];
           const aulasResponse = await custom_axios.get('/apiv1/aula', { params: { ids: aulaIds.join(',') } });
@@ -96,7 +110,7 @@ export default {
             return acc;
           }, {});
 
-          console.log('Aulas:', aulas); 
+          console.log('Aulas:', aulas);
 
           this.listadoReservaAula = reservas.map(reserva => {
             return {
@@ -105,7 +119,7 @@ export default {
             };
           });
 
-          console.log('Listado Reservas Aulas:', this.listadoReservaAula); 
+          console.log('Listado Reservas Aulas:', this.listadoReservaAula);
         }
       } catch (error) {
         console.error(error);
@@ -144,6 +158,16 @@ export default {
             console.error(error);
           });
       }
+    },
+    abrirAgendamientoMateriaAula() {
+      this.mostrarAgendamientoMateriaAula = true;
+    },
+    guardarAgendamientoMateriaAula() {
+      this.todasLasReservasAula();
+      this.mostrarAgendamientoMateriaAula = false;
+    },
+    cancelarAgendamientoMateriaAula() {
+      this.mostrarAgendamientoMateriaAula = false;
     },
   },
   created() {

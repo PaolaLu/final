@@ -18,7 +18,9 @@ class Apiv1Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
+        \Yii::$app->urlManager->addRules([
+            'GET apiv1/reservaaula/materias-reservadas/<id:\d+>' => 'apiv1/reservaaula/materias-reservadas',
+        ], false);
+      
     }
 }
