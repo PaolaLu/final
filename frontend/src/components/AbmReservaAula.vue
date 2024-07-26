@@ -12,7 +12,17 @@
           :rules="aulaRules"
           required
         ></v-select>
-        
+
+        <v-select
+          v-model="reservaData.id_materia"
+          :items="materias"
+          item-text="nombre"
+          item-value="id"
+          label="Materia"
+          :rules="materiaRules"
+          required
+        ></v-select>
+
         <!-- Fecha y Hora de Inicio -->
         <v-row>
           <v-col cols="12" sm="6">
@@ -35,8 +45,7 @@
                   required
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="fechaDesde" 
-              @input="menuDesde = false"></v-date-picker>
+              <v-date-picker v-model="fechaDesde" @input="menuDesde = false"></v-date-picker>
             </v-menu>
           </v-col>
           <v-col cols="12" sm="6">
@@ -47,7 +56,6 @@
               prepend-icon="mdi-clock-outline"
               :rules="horaRules"
               required
-              @click="focusInput('horaDesde')"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -85,7 +93,6 @@
               prepend-icon="mdi-clock-outline"
               :rules="horaRules"
               required
-              @click="focusInput('horaHasta')"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -112,7 +119,7 @@ export default {
   props: {
     reserva: {
       type: Object,
-      default: () => ({ id: "", id_aula: "", fh_desde: "", fh_hasta: "", observacion: "" }),
+      default: () => ({ id: "", id_aula: "", fh_desde: "", fh_hasta: "", observacion: "", id_materia: "" }),
     },
     editar: {
       type: Boolean,
@@ -123,7 +130,9 @@ export default {
     return {
       valid: false,
       reservaData: {
+        id: "",
         id_aula: "",
+        id_materia: "",
         fh_desde: "",
         fh_hasta: "",
         observacion: "",
@@ -133,15 +142,15 @@ export default {
       fechaHasta: "",
       horaHasta: "",
       aulas: [],
+      materias: [],
       aulaRules: [(v) => !!v || 'El aula es requerida'],
+      materiaRules: [(v) => !!v || 'La materia es requerida'],
       fechaDesdeRules: [(v) => !!v || 'La fecha de inicio es requerida'],
       fechaHastaRules: [(v) => !!v || 'La fecha de fin es requerida'],
       horaRules: [(v) => !!v || 'La hora es requerida'],
       observacionRules: [],
       menuDesde: false,
       menuHasta: false,
-      aulasLoading: false,
-      aulasError: '',
     };
   },
   watch: {
@@ -157,9 +166,6 @@ export default {
           const hasta = new Date(this.reservaData.fh_hasta);
           this.fechaHasta = this.formatDate(hasta);
           this.horaHasta = this.formatTime(hasta);
-        }
-        if (!this.editar) {
-          this.resetValidation();
         }
       },
       deep: true,
@@ -182,85 +188,41 @@ export default {
       this.reservaData.fh_hasta = `${this.fechaHasta}T${this.horaHasta}:00`;
     },
     submit() {
-      this.$refs.form.validate();
-      if (this.valid) {
+      if (this.$refs.form.validate()) {
         this.updateDateTime();
-        if (this.editar) {
-          this.editarReserva();
-        } else {
-          this.guardarReserva();
-        }
+        this.$emit('guardar', this.reservaData);
       }
-    },
-    guardarReserva() {
-      custom_axios
-        .post('/apiv1/reservaaula', this.reservaData)
-        .then((response) => {
-          this.$emit('guardar');
-          this.$emit('cerrar');
-        })
-        .catch((error) => {
-          console.error('Error guardando reserva:', error);
-        });
-    },
-    editarReserva() {
-      custom_axios
-        .patch(`/apiv1/reservaaula/${this.reservaData.id}`, this.reservaData)
-        .then((response) => {
-          this.$emit('guardar');
-          this.$emit('cerrar');
-          this.$emit('actualizar');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
     },
     cancelar() {
       this.$emit('cancelar');
     },
-    resetValidation() {
-      if (this.$refs.form) {
-        this.$refs.form.resetValidation();
+    async obtenerAulas() {
+      try {
+        const response = await custom_axios.get('/apiv1/aula');
+        this.aulas = response.data;
+      } catch (error) {
+        console.error('Error obteniendo aulas:', error);
       }
     },
-    obtenerAulas() {
-      this.aulasLoading = true;
-      this.aulasError = '';
-      custom_axios
-        .get('/apiv1/aula')
-        .then((response) => {
-          this.aulas = response.data;
-        })
-        .catch((error) => {
-          this.aulasError = 'Error obteniendo aulas';
-          console.error('Error obteniendo aulas:', error);
-        })
-        .finally(() => {
-          this.aulasLoading = false;
-        });
+    async obtenerMaterias() {
+      try {
+        const response = await custom_axios.get('/apiv1/materia');
+        this.materias = response.data;
+      } catch (error) {
+        console.error('Error obteniendo materias:', error);
+      }
     },
-    focusInput(ref) {
-      this.$nextTick(() => {
-        if (this.$refs[ref]) {
-          this.$refs[ref].focus();
-        }
-      });
-    }
   },
   created() {
     this.obtenerAulas();
-    if (this.reserva) {
-      this.reservaData = { ...this.reserva };
-    }
+    this.obtenerMaterias();
   },
 };
 </script>
 
 <style scoped>
-.mr-2 {
-  margin-right: 8px;
-}
-.ml-2 {
-  margin-left: 8px;
+.v-card {
+  max-width: 600px;
+  margin: auto;
 }
 </style>

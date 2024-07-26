@@ -37,6 +37,7 @@ class ReservaAula extends \yii\db\ActiveRecord
             [['fh_desde', 'fh_hasta'], 'safe'],
             [['observacion'], 'string', 'max' => 256],
             [['id_aula'], 'exist', 'skipOnError' => true, 'targetClass' => Aula::class, 'targetAttribute' => ['id_aula' => 'id']],
+            [['id_materia'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::class, 'targetAttribute' => ['id_materia' => 'id']],
         ];
     }
 
@@ -51,6 +52,7 @@ class ReservaAula extends \yii\db\ActiveRecord
             'fh_desde' => 'Fh Desde',
             'fh_hasta' => 'Fh Hasta',
             'observacion' => 'Observacion',
+            'id_materia' => 'ID Materia',
         ];
     }
 
@@ -81,5 +83,14 @@ class ReservaAula extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ReservaAulaQuery(get_called_class());
+    }
+      /**
+     * Gets query for [[Materia]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMateria()
+    {
+        return $this->hasOne(Materia::class, ['id' => 'id_materia']);
     }
 }
