@@ -1,5 +1,6 @@
 <template>
   <div class="aula-container">
+    <!-- Botones y Filtros -->
     <div class="button-container">
       <v-btn 
         color="primary" 
@@ -27,6 +28,34 @@
       </v-btn>
     </div>
 
+    <!-- Filtros -->
+    <v-row>
+      <v-col cols="6">
+        <v-select
+          v-model="selectedAula"
+          :items="aulas"
+          item-value="id"
+          item-text="descripcion"
+          label="Seleccionar Aula"
+        ></v-select>
+      </v-col>
+      <v-col cols="6">
+        <v-select
+          v-model="selectedMateria"
+          :items="materias"
+          item-value="id"
+          item-text="nombre"
+          label="Seleccionar Materia"
+        ></v-select>
+      </v-col>
+      <v-col cols="12">
+        <v-btn color="primary" @click="buscarReservas">
+          Buscar Reservas
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <!-- Calendario -->
     <v-row v-if="mostrarCalendario">
       <v-col cols="12">
         <v-sheet height="400">
@@ -40,6 +69,7 @@
       </v-col>
     </v-row>
 
+    <!-- Tabla -->
     <v-data-table
       :headers="headers"
       :items="listadoReservaAula"
@@ -99,15 +129,7 @@
       </template>
     </v-data-table>
 
-    <v-dialog v-model="mostrarAbmReservaAula" max-width="500px" persistent>
-      <AbmReservaAula
-        :reserva="reservaAulaSeleccionada"
-        :editar="editar"
-        @guardar="guardarAbmReservaAula"
-        @cancelar="cancelarAbmReservaAula"
-      />
-    </v-dialog>
-
+    <!-- Diálogo de Confirmación -->
     <v-dialog v-model="mostrarConfirmacion" max-width="500px">
       <v-card>
         <v-card-title class="headline">Confirmar Eliminación</v-card-title>
@@ -120,6 +142,7 @@
       </v-card>
     </v-dialog>
 
+    <!-- Diálogo de Detalles -->
     <v-dialog v-model="mostrarDetalles" max-width="500px">
       <v-card>
         <v-card-title>Detalles de la Reserva</v-card-title>
@@ -136,13 +159,28 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
+    <v-dialog v-model="mostrarAbmReservaAula" max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">{{ editar ? 'Editar' : 'Agregar' }} Reserva de Aula</span>
+      </v-card-title>
+      <v-card-text>
+        <abm-reserva-aula
+          :editar="editar"
+          :reserva="reservaAulaSeleccionada"
+          @guardar="guardarAbmReservaAula"
+          @cerrar="cerrarDialog"
+        >
+        </abm-reserva-aula>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+    <!-- Snackbar -->
     <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="3000">
       {{ snackbarText }}
     </v-snackbar>
   </div>
 </template>
-
 <script>
 import custom_axios from '../plugins/axios.js';
 import AbmReservaAula from './AbmReservaAula.vue';
@@ -158,7 +196,6 @@ export default {
         { text: 'Fecha', value: 'fh_desde', width: '15%' },
         { text: 'Hora', value: 'fh_hasta', width: '10%' },
         { text: 'Materia', value: 'materia_nombre', width: '25%' },
-        { text: 'Observación', value: 'observacion', width: '20%' },
         { text: 'Acciones', value: 'actions', sortable: false, width: '10%', align: 'center' },
       ],
       listadoReservaAula: [],
@@ -174,6 +211,10 @@ export default {
       snackbarColor: '',
       snackbarText: '',
       eventosCalendario: [],
+      aulas: [],
+      materias: [],
+      selectedAula: null,
+      selectedMateria: null,
     };
   },
   methods: {
@@ -185,25 +226,27 @@ export default {
 
           const aulaIds = [...new Set(reservas.map(r => r.id_aula))];
           const aulasResponse = await custom_axios.get('/apiv1/aula', { params: { ids: aulaIds.join(',') } });
-          const aulas = aulasResponse.data.reduce((acc, aula) => {
-            acc[aula.id] = aula;
-            return acc;
-          }, {});
+          this.aulas = aulasResponse.data;
 
           const materiaIds = [...new Set(reservas.map(r => r.id_materia))];
           const materiasResponse = await custom_axios.get('/apiv1/materia', { params: { ids: materiaIds.join(',') } });
-          const materias = materiasResponse.data.reduce((acc, materia) => {
-            acc[materia.id] = materia;
+          this.materias = materiasResponse.data;
+
+          const aulaMap = this.aulas.reduce((acc, aula) => {
+            acc[aula.id] = aula.descripcion;
+            return acc;
+          }, {});
+          
+          const materiaMap = this.materias.reduce((acc, materia) => {
+            acc[materia.id] = materia.nombre;
             return acc;
           }, {});
 
-          this.listadoReservaAula = reservas.map(reserva => {
-            return {
-              ...reserva,
-              aula_descripcion: aulas[reserva.id_aula] ? aulas[reserva.id_aula].descripcion : 'Sin aula',
-              materia_nombre: materias[reserva.id_materia] ? materias[reserva.id_materia].nombre : 'Sin materia',
-            };
-          });
+          this.listadoReservaAula = reservas.map(reserva => ({
+            ...reserva,
+            aula_descripcion: aulaMap[reserva.id_aula] || 'Sin aula',
+            materia_nombre: materiaMap[reserva.id_materia] || 'Sin materia',
+          }));
 
           this.actualizarEventosCalendario();
         }
@@ -212,14 +255,24 @@ export default {
         this.mostrarSnackbar('Error al cargar las reservas', 'error');
       }
     },
+    buscarReservas() {
+      this.actualizarEventosCalendario();
+    },
     actualizarEventosCalendario() {
-      this.eventosCalendario = this.listadoReservaAula.map(reserva => ({
-        name: `${reserva.materia_nombre} - ${reserva.aula_descripcion}`,
-        start: new Date(reserva.fh_desde),
-        end: new Date(reserva.fh_hasta),
-        color: this.getRandomColor(),
-        timed: true,
-      }));
+      const eventos = this.listadoReservaAula
+        .filter(reserva => 
+          (!this.selectedAula || reserva.id_aula === this.selectedAula) &&
+          (!this.selectedMateria || reserva.id_materia === this.selectedMateria)
+        )
+        .map(reserva => ({
+          name: reserva.materia_nombre,
+          start: new Date(reserva.fh_desde),
+          end: new Date(reserva.fh_hasta),
+          color: this.getRandomColor(),
+          timed: true,
+        }));
+
+      this.eventosCalendario = eventos;
     },
     getRandomColor() {
       const letters = '0123456789ABCDEF';
@@ -287,9 +340,10 @@ export default {
 
       return false;
     },
-    cancelarAbmReservaAula() {
-      this.mostrarAbmReservaAula = false;
-    },
+     cerrarDialog() {
+    this.mostrarAbmReservaAula = false;
+    // Aquí puedes agregar cualquier otra lógica necesaria al cerrar el diálogo
+  },
     navigateToHome() {
       this.$router.push('/');
     },

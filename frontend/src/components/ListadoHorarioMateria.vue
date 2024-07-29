@@ -68,6 +68,7 @@
           { text: 'Materia', value: 'materia' },
           { text: 'Desde', value: 'fh_desde' },
           { text: 'Hasta', value: 'fh_hasta' },
+          { text: 'Observación', value: 'observacion' },
           { text: 'Acciones', value: 'actions', sortable: false },
         ],
         listadoHorarios: [],

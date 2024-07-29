@@ -45,8 +45,9 @@
 		{ title: "Carrera", icon: "mdi-school", to: "/carrera" },
 		{ title: "Profesor", icon: "mdi-school", to: "/profesor" },
 		{ title: "Materia", icon: "mdi-school", to: "/materia" },
-		{ title: "Reserva Aula", icon: "mdi-school", to: "/reservaaula" },
 		{ title: "Horario Materia", icon: "mdi-school", to: "/horariomateria" },
+		{ title: "Reserva Aula", icon: "mdi-school", to: "/reservaaula" },
+		
 	  ],
 	}),
 	mounted() {},

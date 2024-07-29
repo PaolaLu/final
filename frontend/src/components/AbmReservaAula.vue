@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" @submit.prevent="submit">
     <v-card>
-      <v-card-title>{{ editar ? 'Editar Reserva de Aula' : 'Agregar Reserva de Aula' }}</v-card-title>
+      <v-card-title>{{ editar ? 'Editar Reserva de Aula' : '' }}</v-card-title>
       <v-card-text>
         <v-select
           v-model="reservaData.id_aula"
@@ -194,7 +194,8 @@ export default {
       }
     },
     cancelar() {
-      this.$emit('cancelar');
+      this.$emit('cerrar');
+      
     },
     async obtenerAulas() {
       try {
