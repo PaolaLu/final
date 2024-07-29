@@ -21,15 +21,10 @@
           <v-icon left>mdi-login</v-icon>
           Login
         </v-btn>
-        <v-btn small text to="/register">
-          <v-icon left>mdi-account-plus</v-icon>
-          Register
-        </v-btn>
+      
       </template>
       
-      <v-btn small text fab>
-        <v-icon>mdi-cog-outline</v-icon>
-      </v-btn>
+  
     </v-app-bar>
   </v-container>
 </template>
@@ -46,8 +41,8 @@ export default {
     };
   },
   created() {
-     // Inicializar el usuario desde localStorage
-     const user = localStorage.getItem('user');
+    // Inicializar el usuario desde localStorage
+    const user = localStorage.getItem('user');
     if (user) {
       this.currentUser = JSON.parse(user);
     }

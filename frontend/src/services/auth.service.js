@@ -25,11 +25,16 @@ class AuthService {
     });
   }
 
-  register(username, passwd) {
+  register(username, nombre, apellido, passwd) {
     return custom_axios.post(API_URL + 'signup', {
       username,
+      nombre,
+      apellido,
       passwd
-    });
+    }).then(response => {
+        // Asegúrate de que la respuesta es la esperada
+        return response.data; // `response.data` debería contener `success` y `message`
+      });
   }
 }
 

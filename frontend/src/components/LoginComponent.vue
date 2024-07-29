@@ -4,6 +4,7 @@
       <v-text-field v-model="username" label="Username" required></v-text-field>
       <v-text-field v-model="passwd" label="Password" type="password" required></v-text-field>
       <v-btn type="submit" color="primary">Login</v-btn>
+      <v-btn @click="goToRegister" color="secondary">Registrarse</v-btn>
     </v-form>
   </template>
   
@@ -34,7 +35,9 @@
               console.log(error);
             }
           );
-      }
+      }, goToRegister() {
+      this.$router.push('/register');
+    }
     }
   };
   </script>

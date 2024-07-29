@@ -38,19 +38,19 @@ class AuthController extends BaseController
   
       public function actionSignup()
       {
-          $model = new SignupForm();
-          if ($model->load(Yii::$app->request->post(), '') && $model->signup()) {
-              return [
-                  'success' => true,
-                  'message' => 'User registered successfully',
-              ];
-          } else {
-              Yii::$app->response->statusCode = 400;
-              return [
-                  'success' => false,
-                  'errors' => $model->errors,
-              ];
-          }
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post(), '') && $model->signup()) {
+            return [
+                'success' => true,
+                'message' => 'Nuevo usuario registrado exitosamente.',
+            ];
+        } else {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'errors' => $model->errors,
+            ];
+        }
       }
   
       public function actionLogout()
@@ -58,12 +58,9 @@ class AuthController extends BaseController
           Yii::$app->user->logout();
           return [
               'success' => true,
-              'message' => 'Logged out successfully',
+              'message' => 'Salida exitosa !',
           ];
       }
   
-      public function actionTest()
-  {
-      return ['message' => 'API is working'];
-  }
+
 }

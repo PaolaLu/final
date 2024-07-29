@@ -1,9 +1,10 @@
-<!-- src/components/RegisterComponent.vue -->
 <template>
     <v-form @submit.prevent="handleRegister">
       <v-text-field v-model="username" label="Username" required></v-text-field>
-      <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
-      <v-btn type="submit" color="primary">Register</v-btn>
+      <v-text-field v-model="nombre" label="Nombre" required></v-text-field>
+      <v-text-field v-model="apellido" label="Apellido" required></v-text-field>
+      <v-text-field v-model="passwd" label="Password" type="password" required></v-text-field>
+      <v-btn type="submit" color="primary">Registrarse</v-btn>
     </v-form>
   </template>
   
@@ -14,23 +15,29 @@
     data() {
       return {
         username: '',
-        password: '',
+        nombre: '',
+        apellido: '',
+        passwd: '',
       };
     },
     methods: {
       handleRegister() {
-        AuthService.register(this.username, this.password)
-          .then(
-            response => {
-              if (response.data.success) {
-                this.$router.push('/login');
-              }
-            },
-            error => {
-              console.log(error);
+        AuthService.register(this.username, this.nombre, this.apellido, this.passwd)
+          .then(response => {
+            if (response.success) {
+                  // Limpiar los campos del formulario
+            this.username = '';
+            this.nombre = '';
+            this.apellido = '';
+            this.passwd = '';
+              this.$router.push('/login');
             }
-          );
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     }
   };
   </script>
+  
