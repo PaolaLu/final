@@ -14,6 +14,7 @@ import AbmReservaAula from '../components/AbmReservaAula.vue';
 import ListadoReservaAula from '../components/ListadoReservaAula.vue';
 import AbmHorarioMateria from '../components/AbmHorarioMateria.vue';
 import ListadoHorarioMateria from '../components/ListadoHorarioMateria.vue';
+import LoginComponent from '../components/LoginComponent.vue';
 
 
 
@@ -33,7 +34,7 @@ const routes = [
   { path: '/reservaaula', name: 'ListadoReservaAula', component: ListadoReservaAula },
   { path: '/abmhorariomateria', name: 'AbmHorarioMateria', component: AbmHorarioMateria },
   { path: '/horariomateria', name: 'ListadoHorarioMateria', component: ListadoHorarioMateria },
-  
+  { path: '/login', name: 'LoginComponent', component: LoginComponent },
   
 ];
 

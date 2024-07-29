@@ -70,10 +70,14 @@ $config = [
                         'apiv1/aula',
                         'apiv1/materia',
                         'apiv1/horariomateria',
-                        'apiv1/reservaaula'
-
+                        'apiv1/reservaaula',
+                        'GET apiv1/auth' => 'apiv1/test',
+                        'POST apiv1/auth' => 'api/login',
+                        'POST apiv1/signup' => 'apiv1/auth/signup',
+                        'POST apiv1/logout' => 'api/logout',
                         ]
                 ],
+    
 
             ],
         ],
@@ -82,7 +86,10 @@ $config = [
     'modules' => [
         'apiv1' => [
             'class' => 'app\modules\apiv1\Apiv1Module',
-        ],
+                ],
+            'api' => [
+            'class' => 'app\modules\api\ApiModule',
+                    ],
     ],
     'params' => $params,
 ];
