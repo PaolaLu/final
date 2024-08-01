@@ -11,7 +11,7 @@
         Agregar Reserva de Aula
       </v-btn>
       <v-btn
-        color="info" 
+        color="primary" 
         @click="mostrarCalendario = !mostrarCalendario"
         class="custom-button mr-4"
       >
@@ -19,7 +19,7 @@
         {{ mostrarCalendario ? 'Ocultar Calendario' : 'Mostrar Calendario' }}
       </v-btn>
       <v-btn
-        color="blue" 
+        color="primary" 
         @click="navigateToHome"
         class="custom-button"
       >
@@ -84,49 +84,49 @@
         {{ formatTime(item.fh_hasta) }}
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon 
-              v-bind="attrs"
-              v-on="on"
-              color="green" 
-              @click="abrirAbmReservaAula(true, item)" 
-              small
-            >
-              mdi-pencil
-            </v-icon>
-          </template>
-          <span>Editar</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon 
-              v-bind="attrs"
-              v-on="on"
-              color="red" 
-              @click="confirmarEliminarReservaAula(item)" 
-              small
-            >
-              mdi-delete
-            </v-icon>
-          </template>
-          <span>Eliminar</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon 
-              v-bind="attrs"
-              v-on="on"
-              color="blue" 
-              @click="mostrarDetallesReserva(item)" 
-              small
-            >
-              mdi-information
-            </v-icon>
-          </template>
-          <span>Detalles</span>
-        </v-tooltip>
-      </template>
+  <v-tooltip bottom>
+    <template v-slot:activator="{ on, attrs }">
+      <v-icon 
+        v-bind="attrs"
+        v-on="on"
+        color="green" 
+        @click="abrirAbmReservaAula(true, item)" 
+        medium
+      >
+        mdi-pencil
+      </v-icon>
+    </template>
+    <span>Editar</span>
+  </v-tooltip>
+  <v-tooltip bottom>
+    <template v-slot:activator="{ on, attrs }">
+      <v-icon 
+        v-bind="attrs"
+        v-on="on"
+        color="red" 
+        @click="confirmarEliminarReservaAula(item)" 
+        medium
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <span>Eliminar</span>
+  </v-tooltip>
+  <v-tooltip bottom>
+    <template v-slot:activator="{ on, attrs }">
+      <v-icon 
+        v-bind="attrs"
+        v-on="on"
+        color="blue" 
+        @click="mostrarDetallesReserva(item)" 
+        medium
+      >
+        mdi-information
+      </v-icon>
+    </template>
+    <span>Detalles</span>
+  </v-tooltip>
+</template>
     </v-data-table>
 
     <!-- Diálogo de Confirmación -->

@@ -10,7 +10,7 @@
         Agregar Aula
       </v-btn>
       <v-btn
-        color="blue" 
+        color="primary" 
         @click="navigateToHome"
         class="custom-button"
       >

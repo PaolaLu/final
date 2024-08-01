@@ -8,6 +8,7 @@ use Yii;
 use app\models\User;
 use app\models\LoginForm;
 use app\models\SignupForm;
+
 /**
  * Default controller for the `apiv1` module
  */
@@ -15,7 +16,7 @@ class AuthController extends BaseController
 {
       public $modelClass='app\modules\apiv1\models\User';
 
-
+    
       public function actionLogin()
       {
           $model = new LoginForm();
@@ -25,6 +26,7 @@ class AuthController extends BaseController
                   'user' => [
                       'id' => Yii::$app->user->identity->id,
                       'username' => Yii::$app->user->identity->username,
+                      'nombre' => Yii::$app->user->identity->nombre,
                   ],
               ];
           } else {

@@ -2,14 +2,7 @@
 	<v-container>
 	  <v-navigation-drawer app permanent>
 		<v-list-item>
-		  <v-img
-			alt="Aulas Logo1"
-			class="shrink mr-2"
-			contain
-			:src="require('../assets/logo1.png')"
-			transition="scale-transition"
-			width="40"
-		  />
+		  
 		  <v-list-item-content>
 			<v-list-item-title class="text-h6">Aulas Curza</v-list-item-title>
 			<v-list-item-subtitle>Final 2024</v-list-item-subtitle>

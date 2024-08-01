@@ -9,7 +9,7 @@
       <v-icon left>mdi-school</v-icon>
       Agregar Horario de Materia</v-btn>
       <v-btn
-        color="blue" 
+        color="primary" 
 
         @click="navigateToHome"
         class="custom-button"

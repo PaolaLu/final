@@ -42,6 +42,9 @@ class BaseController extends ActiveController
         return $behaviors;
     }
 
+
+
+
     public function actions()
     {
         $actions = parent::actions();
@@ -51,4 +54,6 @@ class BaseController extends ActiveController
         ];
         return $actions;
     }
+
+ 
 }

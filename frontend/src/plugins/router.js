@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
+import { isAuthenticated } from '../auth'; 
 import HomeAula from '../components/HomeAula.vue';
 import AbmAula from '../components/AbmAula.vue';
 import ListadoAula from '../components/ListadoAula.vue';
@@ -42,6 +42,22 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/register'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = isAuthenticated();
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+
+  if (to.path === '/login' && loggedIn) {
+    return next('/');
+  }
+
+  next();
 });
 
 export default router;

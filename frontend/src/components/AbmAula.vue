@@ -153,6 +153,7 @@ export default {
           console.log(response);
           this.resetValidationForAbm();
           this.$emit("guardar");
+          this.$router.push('/aulas');
         })
         .catch(error => {
           console.log(error);

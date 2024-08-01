@@ -9,7 +9,7 @@
         <v-icon left>mdi-school</v-icon>
          Agregar Carrera</v-btn>
          <v-btn
-         color="blue" 
+         color="primary" 
          @click="navigateToHome"
          class="custom-button"
       >
